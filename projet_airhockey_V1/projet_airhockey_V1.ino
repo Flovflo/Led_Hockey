@@ -87,23 +87,23 @@ void ALLUMER_AMBIANCE_RED()
   {
     //LEDS_AMBIANCE_TOTAL 
     for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-      pixels.setPixelColor(i, 255, 0, 0); //blue
+      pixelsAmbiance.setPixelColor(i, 255, 0, 0); //blue
     }
     // Mettre à jour les pixels
-    pixels.show();
-    delay(1000)
+    pixelsAmbiance.show();
+    delay(1000);
     for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-      pixels.setPixelColor(i, 255, 0, 0); //blue
+      pixelsAmbiance.setPixelColor(i, 255, 0, 0); //blue
     }
     // Mettre à jour les pixels
-    pixels.show();
-    delay(1000)
+    pixelsAmbiance.show();
+    delay(1000);
         for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-      pixels.setPixelColor(i, 255, 0, 0); //blue
+      pixelsAmbiance.setPixelColor(i, 255, 0, 0); //blue
     }
     // Mettre à jour les pixels
-    pixels.show();
-    delay(3000)
+    pixelsAmbiance.show();
+    delay(3000);
     ALLUMER_AMBIANCE_NORMAL();
   }
 
@@ -111,37 +111,37 @@ void ALLUMER_AMBIANCE_BLUE()
   {
     //LEDS_AMBIANCE_TOTAL 
     for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-      pixels.setPixelColor(i,  0, 0, 255); //blue
+      pixelsAmbiance.setPixelColor(i,  0, 0, 255); //blue
     }
     // Mettre à jour les pixels
-    pixels.show();
-    delay(1000)
+    pixelsAmbiance.show();
+    delay(1000);
     for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-      pixels.setPixelColor(i,  0, 0, 0); //blue
+      pixelsAmbiance.setPixelColor(i,  0, 0, 0); //blue
     }
     // Mettre à jour les pixels
-    pixels.show();
-    delay(1000)
+    pixelsAmbiance.show();
+    delay(1000);
         for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-      pixels.setPixelColor(i,  0, 0, 255); //blue
+      pixelsAmbiance.setPixelColor(i,  0, 0, 255); //blue
     }
     // Mettre à jour les pixels
-    pixels.show();
-    delay(3000)
+    pixelsAmbiance.show();
+    delay(3000);
     ALLUMER_AMBIANCE_NORMAL();
   }
 
 void ALLUMER_AMBIANCE_NORMAL() {
   // Allumer LEDS_AMBIANCE_RED  pixels en rouge
   for (int i = 0; i < LEDS_AMBIANCE_RED; i++) {
-    pixels.setPixelColor(i, 255, 0, 0);
+    pixelsAmbiance.setPixelColor(i, 255, 0, 0);
   }
   // Allumer LEDS_AMBIANCE_BLUE derniers pixels en bleu
   for (int i = LEDS_AMBIANCE_BLUE; i < 100; i++) {
-    pixels.setPixelColor(i, 0, 0, 255);
+    pixelsAmbiance.setPixelColor(i, 0, 0, 255);
   }
   // Mettre à jour les pixels
-  pixels.show();
+  pixelsAmbiance.show();
 }
 void JOUEUR_BLUE() 
 {
@@ -202,31 +202,32 @@ void JOUEUR_BLUE()
                       pixelsScore.show();
                       ALLUMER_AMBIANCE_BLUE(); 
                       delay(1000);
-                      
+                      break;
                     }
+
           } 
           else 
           {
             if ( SCORE_BLUE > SCORE_RED) { // si SCORE_BLUE est plus grand que SCORE_RED
                           for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-                            pixels.setPixelColor(i,  0, 0, 255); //blue
+                            pixelsAmbiance.setPixelColor(i,  0, 0, 255); //blue
                           }
                           // Mettre à jour les pixels
-                          pixels.show();
+                          pixelsAmbiance.show();
                           delay(20000);
                         }
                         // Sinon
                         else {
                           for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-                            pixels.setPixelColor(i,  255, 0, 0); //red
+                            pixelsAmbiance.setPixelColor(i,  255, 0, 0); //red
                           }
                           // Mettre à jour les pixels
-                          pixels.show();
+                          pixelsAmbiance.show();
                           delay(20000);
                         }
                         RESET();
           }
-                      break;
+                      
                       
         }
  }
@@ -291,6 +292,7 @@ void JOUEUR_RED()
                       pixelsScore.show();
                       ALLUMER_AMBIANCE_RED(); 
                       delay(1000);
+                      break;
                       
                     }
           } 
@@ -298,24 +300,23 @@ void JOUEUR_RED()
           {
             if ( SCORE_RED > SCORE_BLUE) { // si SCORE_RED est plus grand que SCORE_BLUE
                           for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-                            pixels.setPixelColor(i,  255, 0, 0); //red
+                            pixelsAmbiance.setPixelColor(i,  255, 0, 0); //red
                           }
                           // Mettre à jour les pixels
-                          pixels.show();
+                          pixelsAmbiance.show();
                           delay(20000);
                         }
                         // Sinon
                         else {
                           for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
-                            pixels.setPixelColor(i,  0, 0, 255); //blue
+                            pixelsAmbiance.setPixelColor(i,  0, 0, 255); //blue
                           }
                           // Mettre à jour les pixels
-                          pixels.show();
+                          pixelsAmbiance.show();
                           delay(20000);
                         }
                         RESET();
           }
-         break;
 
         }
 }
