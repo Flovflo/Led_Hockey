@@ -1,6 +1,6 @@
 #define BUTTON_BLUE 2
-#define BUTTON_RED 4
-#define BUTTON_RESET 3
+#define BUTTON_RED 7
+#define BUTTON_RESET 4
 
 #define PIN_PIXELS_SCORE 11
 #define LEDS_SCORE 7
@@ -26,9 +26,11 @@ int SCORE_RED=0;
 void setup() 
 {
 Serial.begin(9600);  
+//definir les bouttons en entrée et pullup
 pinMode(BUTTON_BLUE, INPUT_PULLUP);
 pinMode(BUTTON_RED, INPUT_PULLUP);
 pinMode(BUTTON_RESET, INPUT_PULLUP);
+
   
 pixelsScore.begin();
 pixelsAmbiance.begin();
