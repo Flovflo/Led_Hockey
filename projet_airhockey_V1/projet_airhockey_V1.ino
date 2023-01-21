@@ -1,6 +1,6 @@
 #define BUTTON_BLUE 2
-#define BUTTON_RED 4
-#define BUTTON_RESET 3
+#define BUTTON_RED 7
+#define BUTTON_RESET 4
 
 #define PIN_PIXELS_SCORE 11
 #define LEDS_SCORE 7
@@ -26,9 +26,11 @@ int SCORE_RED=0;
 void setup() 
 {
 Serial.begin(9600);  
+//definir les bouttons en entrée et pullup
 pinMode(BUTTON_BLUE, INPUT_PULLUP);
 pinMode(BUTTON_RED, INPUT_PULLUP);
 pinMode(BUTTON_RESET, INPUT_PULLUP);
+
   
 pixelsScore.begin();
 pixelsAmbiance.begin();
@@ -226,9 +228,96 @@ void JOUEUR_BLUE()
           }
                       break;
                       
-                    }
-               }
-                
-          }
+        }
  }
- 
+
+ //la meme focntion pour le joueur rouge
+void JOUEUR_RED()
+{
+  if(digitalRead(BUTTON_RED)==LOW)
+          {
+          SCORE_RED=SCORE_RED+1;
+          NB_BUT=NB_BUT+1;
+                Serial.println(NB_BUT);
+                Serial.println(SCORE_RED);
+            if (NB_BUT<7)
+             {
+                switch (SCORE_RED)
+                   {
+                      case 1: //Si SCORE_RED vaut 1
+                      pixelsScore.setPixelColor(1, 255, 0, 0); //Rouge
+                      pixelsScore.show(); //met à jour le bandeau de pixels en utilisant la fonction show
+                      ALLUMER_AMBIANCE_RED();
+                      delay(1000);//attente de 1s
+                      break; 
+                  
+                      case 2: 
+                      pixelsScore.setPixelColor(2, 255, 0, 0); 
+                      pixelsScore.show(); 
+                      ALLUMER_AMBIANCE_RED();
+                      delay(1000);
+                      break;
+                  
+                      case 3: 
+                      pixelsScore.setPixelColor(3, 255, 0, 0); 
+                      pixelsScore.show(); 
+                      ALLUMER_AMBIANCE_RED();
+                      delay(1000);
+                      break;  
+        
+                      case 4: 
+                      pixelsScore.setPixelColor(4, 255, 0, 0); 
+                      pixelsScore.show(); 
+                      ALLUMER_AMBIANCE_RED();
+                      delay(1000);
+                      break; 
+        
+                      case 5: 
+                      pixelsScore.setPixelColor(5, 255, 0, 0); 
+                      pixelsScore.show();
+                      ALLUMER_AMBIANCE_RED();
+                      delay(1000);
+                      break; 
+        
+                      case 6: 
+                      pixelsScore.setPixelColor(6, 255, 0, 0); 
+                      pixelsScore.show(); 
+                      ALLUMER_AMBIANCE_RED();
+                      delay(1000);
+                      break;
+        
+                      case 7: 
+                      pixelsScore.setPixelColor(7, 255, 0, 0); 
+                      pixelsScore.show();
+                      ALLUMER_AMBIANCE_RED(); 
+                      delay(1000);
+                      
+                    }
+          } 
+          else 
+          {
+            if ( SCORE_RED > SCORE_BLUE) { // si SCORE_RED est plus grand que SCORE_BLUE
+                          for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
+                            pixels.setPixelColor(i,  255, 0, 0); //red
+                          }
+                          // Mettre à jour les pixels
+                          pixels.show();
+                          delay(20000);
+                        }
+                        // Sinon
+                        else {
+                          for (int i = 0; i < LEDS_AMBIANCE_TOTAL; i++) {
+                            pixels.setPixelColor(i,  0, 0, 255); //blue
+                          }
+                          // Mettre à jour les pixels
+                          pixels.show();
+                          delay(20000);
+                        }
+                        RESET();
+          }
+         break;
+
+        }
+}
+
+
