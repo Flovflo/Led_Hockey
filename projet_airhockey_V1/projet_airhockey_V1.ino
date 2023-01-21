@@ -16,7 +16,7 @@
 //setup led score
 Adafruit_NeoPixel pixelsScore = Adafruit_NeoPixel(LEDS_SCORE, PIN_PIXELS_SCORE, NEO_RGB + NEO_KHZ400);
 //setup led ambiance
-Adafruit_NeoPixel stripLED = Adafruit_NeoPixel(LEDS_AMBIANCE_TOTAL, PIN_LEDS_AMBIANCE, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixelsAmbiance = Adafruit_NeoPixel(LEDS_AMBIANCE_TOTAL, PIN_LEDS_AMBIANCE, NEO_GRB + NEO_KHZ800);
 
 //variable globale
 int NB_BUT=0;
