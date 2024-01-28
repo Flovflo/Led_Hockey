@@ -30,22 +30,28 @@ light:
 
 binary_sensor:
   - platform: gpio
-    pin: GPIO2
-    id: bouton_bleu
+    pin:
+      number: GPIO2
+      mode: INPUT_PULLUP
+    name: "Bouton Bleu"
     on_press:
       then:
         - script.execute: increment_score_blue
 
   - platform: gpio
-    pin: GPIO7
-    id: bouton_rouge
+    pin:
+      number: GPIO7
+      mode: INPUT_PULLUP
+    name: "Bouton Rouge"
     on_press:
       then:
         - script.execute: increment_score_red
 
   - platform: gpio
-    pin: GPIO4
-    id: bouton_reset
+    pin:
+      number: GPIO4
+      mode: INPUT_PULLUP
+    name: "Bouton Reset"
     on_press:
       then:
         - script.execute: reset_game
