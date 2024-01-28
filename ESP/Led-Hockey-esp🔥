@@ -1,0 +1,124 @@
+esphome:
+  name: jeu_led_esp32
+  platform: ESP32
+  board: esp32dev # Ajustez selon votre modèle spécifique
+
+wifi:
+  ssid: "VotreSSID"
+  password: "VotreMotDePasse"
+
+# Activer le logging
+logger:
+
+# Activer les mises à jour OTA
+ota:
+
+light:
+  - platform: neopixelbus
+    id: pixels_score
+    type: GRB
+    pin: GPIO11 # Ajustez en fonction de votre configuration matérielle
+    num_leds: 7
+    name: "Pixels Score"
+
+  - platform: neopixelbus
+    id: pixels_ambiance
+    type: GRB
+    pin: GPIO8 # Ajustez en fonction de votre configuration matérielle
+    num_leds: 100
+    name: "LEDs Ambiance"
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO2
+    id: bouton_bleu
+    on_press:
+      then:
+        - script.execute: increment_score_blue
+
+  - platform: gpio
+    pin: GPIO7
+    id: bouton_rouge
+    on_press:
+      then:
+        - script.execute: increment_score_red
+
+  - platform: gpio
+    pin: GPIO4
+    id: bouton_reset
+    on_press:
+      then:
+        - script.execute: reset_game
+
+globals:
+  - id: score_blue
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: score_red
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+script:
+  - id: increment_score_blue
+    then:
+      - lambda: |-
+          if (id(score_blue) < 7) {
+            id(score_blue) += 1;
+            auto color = light::LightColorValues();
+            color.set_rgb(0, 0, 255);
+            id(pixels_score).set_pixel(id(score_blue) - 1, color);
+            id(pixels_score).show();
+          }
+      - if:
+          condition:
+            lambda: 'return id(score_blue) == 7;'
+          then:
+            - script.execute: end_game_blue
+
+  - id: increment_score_red
+    then:
+      - lambda: |-
+          if (id(score_red) < 7) {
+            id(score_red) += 1;
+            auto color = light::LightColorValues();
+            color.set_rgb(255, 0, 0);
+            id(pixels_score).set_pixel(id(score_red) - 1, color);
+            id(pixels_score).show();
+          }
+      - if:
+          condition:
+            lambda: 'return id(score_red) == 7;'
+          then:
+            - script.execute: end_game_red
+
+  - id: reset_game
+    then:
+      - lambda: |-
+          id(score_blue) = 0;
+          id(score_red) = 0;
+          for (int i = 0; i < 7; i++) {
+            id(pixels_score).set_pixel(i, light::LightColorValues());
+          }
+          id(pixels_score).show();
+          for (int i = 0; i < 100; i++) {
+            id(pixels_ambiance).set_pixel(i, light::LightColorValues());
+          }
+          id(pixels_ambiance).show();
+
+  - id: end_game_blue
+    then:
+      - lambda: |-
+          for (int i = 0; i < 100; i++) {
+            id(pixels_ambiance).set_pixel(i, light::LightColorValues().set_rgb(0, 0, 255));
+          }
+          id(pixels_ambiance).show();
+
+  - id: end_game_red
+    then:
+      - lambda: |-
+          for (int i = 0; i < 100; i++) {
+            id(pixels_ambiance).set_pixel(i, light::LightColorValues().set_rgb(255, 0, 0));
+          }
+          id(pixels_ambiance).show();
