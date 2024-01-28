@@ -25,3 +25,6 @@
 - **Fin de Jeu**: Si un joueur atteint un score de 7, un script de fin de jeu (`end_game_blue` ou `end_game_red`) illumine toutes les LEDs de la bande d'ambiance dans la couleur du joueur gagnant.
 - **Réinitialisation du Jeu**: L'appui sur le bouton de réinitialisation exécute le script `reset_game`, qui remet les scores à zéro et éteint toutes les LEDs.
 
+### Si besoins
+- **Condensateur** : Un condensateur de 1000 µF, 6.3V ou plus, entre le Vcc et le GND de la bande de LEDs peut aider à prévenir les pics de tension lors de l'allumage des LEDs.
+- **Résistance en Série** : Une résistance de 330Ω ou 470Ω sur la ligne de données des LEDs peut aider à réduire le bruit sur cette ligne.
