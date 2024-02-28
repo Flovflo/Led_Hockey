@@ -17,14 +17,14 @@ light:
   - platform: neopixelbus
     id: pixels_score
     type: GRB
-    pin: GPIO11 # Ajustez en fonction de votre configuration matérielle
+    pin: GPIO11 
     num_leds: 7
     name: "Pixels Score"
 
   - platform: neopixelbus
     id: pixels_ambiance
     type: GRB
-    pin: GPIO8 # Ajustez en fonction de votre configuration matérielle
+    pin: GPIO8
     num_leds: 100
     name: "LEDs Ambiance"
 
@@ -55,7 +55,7 @@ binary_sensor:
     on_press:
       then:
         - script.execute: reset_game
-
+        
 globals:
   - id: score_blue
     type: int
@@ -65,66 +65,64 @@ globals:
     type: int
     restore_value: no
     initial_value: '0'
+  - id: turn_count
+    type: int
+    restore_value: no
+    initial_value: '0'
 
 script:
   - id: increment_score_blue
     then:
       - lambda: |-
-          if (id(score_blue) < 7) {
+          if (id(turn_count) < 7) {
             id(score_blue) += 1;
+            id(turn_count) += 1;
             auto color = light::LightColorValues();
-            color.set_rgb(0, 0, 255);
+            color.set_rgb(0, 0, 255); // Bleu pour le score du joueur bleu
             id(pixels_score).set_pixel(id(score_blue) - 1, color);
             id(pixels_score).show();
+            check_end_game();
           }
-      - if:
-          condition:
-            lambda: 'return id(score_blue) == 7;'
-          then:
-            - script.execute: end_game_blue
 
   - id: increment_score_red
     then:
       - lambda: |-
-          if (id(score_red) < 7) {
+          if (id(turn_count) < 7) {
             id(score_red) += 1;
+            id(turn_count) += 1;
             auto color = light::LightColorValues();
-            color.set_rgb(255, 0, 0);
+            color.set_rgb(255, 0, 0); // Rouge pour le score du joueur rouge
             id(pixels_score).set_pixel(id(score_red) - 1, color);
             id(pixels_score).show();
+            check_end_game();
           }
-      - if:
-          condition:
-            lambda: 'return id(score_red) == 7;'
-          then:
-            - script.execute: end_game_red
 
   - id: reset_game
     then:
       - lambda: |-
           id(score_blue) = 0;
           id(score_red) = 0;
+          id(turn_count) = 0;
           for (int i = 0; i < 7; i++) {
             id(pixels_score).set_pixel(i, light::LightColorValues());
           }
           id(pixels_score).show();
-          for (int i = 0; i < 100; i++) {
-            id(pixels_ambiance).set_pixel(i, light::LightColorValues());
-          }
-          id(pixels_ambiance).show();
 
-  - id: end_game_blue
+  - id: check_end_game
     then:
       - lambda: |-
-          for (int i = 0; i < 100; i++) {
-            id(pixels_ambiance).set_pixel(i, light::LightColorValues().set_rgb(0, 0, 255));
+          if (id(turn_count) == 7) {
+            // Logique pour déterminer et afficher le gagnant
+            if (id(score_blue) > id(score_red)) {
+              // Bleu gagne
+              for (int i = 0; i < id(score_blue); i++) {
+                id(pixels_score).set_pixel(i, light::LightColorValues().set_rgb(0, 0, 255));
+              }
+            } else if (id(score_red) > id(score_blue)) {
+              // Rouge gagne
+              for (int i = 0; i < id(score_red); i++) {
+                id(pixels_score).set_pixel(i, light::LightColorValues().set_rgb(255, 0, 0));
+              }
+            }
+            id(pixels_score).show();
           }
-          id(pixels_ambiance).show();
-
-  - id: end_game_red
-    then:
-      - lambda: |-
-          for (int i = 0; i < 100; i++) {
-            id(pixels_ambiance).set_pixel(i, light::LightColorValues().set_rgb(255, 0, 0));
-          }
-          id(pixels_ambiance).show();
