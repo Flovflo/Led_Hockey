@@ -17,7 +17,7 @@
 - La partie se termine lorsque le total des points marqués par les deux joueurs atteint 7 (le nombre de rounds prévu).
 - À ce moment, la fonction `declareWinner()` est appelée pour déterminer le gagnant (le joueur avec le plus grand nombre de points) et déclencher une animation de respiration (`breatheAnimation(CRGB color)`) sur les LEDs d'ambiance dans la couleur du gagnant.
 - L'animation de respiration s'effectue par un éclaircissement et un assombrissement progressifs de la couleur du gagnant, créant un effet visuel attractif pour célébrer la victoire.
-- Après l'animation du gagnant, la fonction `resetGame()` pourrait être appelée pour réinitialiser les scores et les LEDs, prêtes pour une nouvelle partie. Cependant, dans la dernière version du code que j'ai fournie, l'appel à `resetGame()` a été retiré de `declareWinner()` pour permettre à l'animation de se terminer. Vous pourriez vouloir ajouter un mécanisme (comme un bouton de réinitialisation ou un délai) pour réinitialiser le jeu après la célébration du gagnant.
+- Après l'animation du gagnant, la fonction `declareWinner()` pourrait être appelée pour réinitialiser les scores et les LEDs, prêtes pour une nouvelle partie. 
 
 ### À tout moment :
 - Le bouton de réinitialisation peut être utilisé pour remettre à zéro les scores et éteindre les LEDs, préparant ainsi l'aire de jeu pour une nouvelle partie.
