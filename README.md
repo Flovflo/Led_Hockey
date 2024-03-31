@@ -5,26 +5,15 @@
 ### Carte
  - S2 mini
 
-### Configuration de Base
-- **esphome**: Définit les paramètres de base du microcontrôleur, comme le nom et le type de la carte.
-- **wifi**: Configure la connexion Wi-Fi de l'ESP32-S2 Mini.
-- **logger**, **api**, **ota**: Active le logging pour le débogage, l'API pour la communication avec Home Assistant (même si nous n'utilisons pas Home Assistant pour ce projet), et les mises à jour OTA pour faciliter le téléversement de nouvelles versions du firmware sans câble.
+Si le joueur bleu a 3 points et le joueur rouge 2 points, voici ce qui se passe selon le code que nous avons élaboré :
 
-### Gestion des LEDs NeoPixel
-- **light**: Configure deux bandes de LEDs NeoPixel. Une pour le score (`pixels_score`) et une pour l'ambiance (`pixels_ambiance`), en spécifiant le type, le pin de connexion, et le nombre de LEDs.
-
-### Boutons
-- **binary_sensor**: Déclare trois boutons comme capteurs binaires, chacun configuré avec un pin spécifique. Des scripts sont exécutés lors de l'appui sur ces boutons pour augmenter le score ou réinitialiser le jeu.
-
-### Scripts
-- **globals**: Définit deux variables globales (`score_blue` et `score_red`) pour tenir compte des scores.
-- **script**: Contient les scripts qui sont exécutés en réponse à l'appui sur les boutons. Ces scripts gèrent l'augmentation des scores, la mise à jour de l'affichage des scores sur les LEDs, la réinitialisation des scores et de l'affichage, et l'illumination de l'ambiance en fin de jeu. Chaque script utilise des instructions `lambda` pour exécuter du code C++ personnalisé, permettant de manipuler les scores et les états des LEDs directement.
-
-### Fonctionnement du Jeu
-- **Augmentation des Scores**: Lorsqu'un joueur appuie sur son bouton (bleu ou rouge), le script correspondant (`increment_score_blue` ou `increment_score_red`) est exécuté. Si le score est inférieur à 7, il est augmenté et le LED correspondant sur la bande de score est illuminé dans la couleur appropriée.
-- **Fin de Jeu**: Si un joueur atteint un score de 7, un script de fin de jeu (`end_game_blue` ou `end_game_red`) illumine toutes les LEDs de la bande d'ambiance dans la couleur du joueur gagnant.
-- **Réinitialisation du Jeu**: L'appui sur le bouton de réinitialisation exécute le script `reset_game`, qui remet les scores à zéro et éteint toutes les LEDs.
-
-### Si besoins
-- **Condensateur** : Un condensateur de 1000 µF, 6.3V ou plus, entre le Vcc et le GND de la bande de LEDs peut aider à prévenir les pics de tension lors de l'allumage des LEDs.
-- **Résistance en Série** : Une résistance de 330Ω ou 470Ω sur la ligne de données des LEDs peut aider à réduire le bruit sur cette ligne.
+Affichage des Scores : Les LEDs de score afficheront la situation des points en utilisant les couleurs spécifiées pour chaque joueur. Avec 3 points pour le joueur bleu et 2 points pour le joueur rouge, les LEDs s'allumeront comme suit :
+Les trois premières LEDs (en partant de la gauche) s'allumeront en bleu pour représenter les 3 points du joueur bleu.
+Les deux dernières LEDs (en partant de la droite) s'allumeront en rouge pour représenter les 2 points du joueur rouge.
+Les LEDs restantes (au milieu dans ce cas) resteront éteintes (X), représentant l'absence de points.
+Le résultat sur le strip de LEDs de score sera : B B B X X R R
+Animation lors d'un Point Marqué : Chaque fois qu'un joueur marque un point, une animation de "flash" rapide est déclenchée sur les LEDs d'ambiance dans la couleur du joueur qui a marqué. Cela signifie que, juste après le moment où le joueur bleu marque son troisième point (ou le joueur rouge son deuxième), les LEDs d'ambiance s'illuminent brièvement dans la couleur correspondante (bleu pour le joueur bleu, rouge pour le joueur rouge) avant de revenir à l'état éteint.
+Déroulement du Jeu : Le jeu continue jusqu'à ce qu'un total de 7 tours soit atteint (comme indiqué par la variable rounds). Si les joueurs continuent à marquer, les animations de score et les animations d'ambiance se déclencheront en conséquence à chaque point marqué.
+Fin de Partie et Déclaration du Gagnant : Une fois que le total des points marqués atteint 7 (c'est-à-dire que la somme des points du joueur bleu et du joueur rouge égale 7), le jeu procède à déterminer le gagnant en comparant les scores. Si le joueur bleu ou rouge a plus de points, une animation "respirante" se déclenchera sur les LEDs d'ambiance dans la couleur du gagnant pour célébrer sa victoire.
+Dans notre exemple en cours, si le jeu se termine avec le joueur bleu ayant plus de points que le joueur rouge, les LEDs d'ambiance s'illumineront avec une animation "respirante" en bleu.
+Réinitialisation du Jeu : Après la célébration du gagnant, le jeu peut être réinitialisé en appuyant sur le bouton de réinitialisation, éteignant toutes les LEDs et remettant à zéro les compteurs de points pour commencer une nouvelle partie.
