@@ -6,11 +6,11 @@
 ### Connexions
 
 1. **Bande de LEDs "Score"** :
-   - **Data Pin** : Connectez le fil de données de votre première bande de LEDs au **Pin 5** de l'Arduino.
+   - **Data Pin** : Connectez le fil de données de votre première bande de LEDs au **Pin 5** de l'ESP.
    - **Alimentation** : Connectez le VCC de la bande de LEDs à une source d'alimentation 5V et le GND au GND de l'Arduino et de la source d'alimentation.
 
 2. **Bande de LEDs "Ambiance"** :
-   - **Data Pin** : Connectez le fil de données de votre deuxième bande de LEDs au **Pin 18** (pour les modèles compatibles, sinon utilisez un autre pin disponible).
+   - **Data Pin** : Connectez le fil de données de votre deuxième bande de LEDs au **Pin 18**.
    - **Alimentation** : Identique à la bande de LEDs "Score".
 
 3. **Boutons** :
