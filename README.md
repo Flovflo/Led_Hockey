@@ -3,6 +3,21 @@
 ### Carte
  - S2 mini
 
+### Connexions
+
+1. **Bande de LEDs "Score"** :
+   - **Data Pin** : Connectez le fil de données de votre première bande de LEDs au **Pin 5** de l'Arduino.
+   - **Alimentation** : Connectez le VCC de la bande de LEDs à une source d'alimentation 5V et le GND au GND de l'Arduino et de la source d'alimentation.
+
+2. **Bande de LEDs "Ambiance"** :
+   - **Data Pin** : Connectez le fil de données de votre deuxième bande de LEDs au **Pin 18** (pour les modèles compatibles, sinon utilisez un autre pin disponible).
+   - **Alimentation** : Identique à la bande de LEDs "Score".
+
+3. **Boutons** :
+   - **Bouton Bleu** : Connectez une borne du bouton au **Pin 2**, et l'autre borne au GND. Vous pouvez ajouter une résistance de 10kΩ entre le Pin 2 et le VCC pour une meilleure stabilité (pull-up externe), bien que l'exemple utilise une résistance pull-up interne.
+   - **Bouton Rouge** : Connectez une borne du bouton au **Pin 15**, et l'autre au GND, avec une option de résistance pull-up comme ci-dessus.
+   - **Bouton Reset** : Connectez une borne du bouton au **Pin 4**, et l'autre au GND, avec une option de résistance pull-up comme ci-dessus.
+
 ### Avant le début de la partie :
 - Les scores des joueurs sont à 0.
 - Les LEDs de score et d'ambiance sont éteintes, ce qui est établi par la fonction `resetGame()` appelée dans `setup()`.
